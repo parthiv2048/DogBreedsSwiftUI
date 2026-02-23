@@ -11,7 +11,7 @@ import SwiftUI
 struct DogBreedsSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DogBreedsListView(dogBreedsListVM: DogBreedsListVM(networkManager: NetworkManager.shared))
         }
     }
 }

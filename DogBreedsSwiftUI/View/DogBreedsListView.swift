@@ -1,0 +1,70 @@
+//
+//  ContentView.swift
+//  DogBreedsSwiftUI
+//
+//  Created by Parthiv Ganguly on 2/23/26.
+//
+
+import SwiftUI
+
+struct DogBreedsListView: View {
+    
+    private var dogBreedsListVM: DogBreedsListVMProtocol?
+    
+    init(dogBreedsListVM: DogBreedsListVMProtocol? = nil) {
+        self.dogBreedsListVM = dogBreedsListVM
+    }
+    
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(0..<(dogBreedsListVM?.numberOfDogBreeds() ?? 0), id: \.self) { index in
+                    
+                    let dogBreedName = dogBreedsListVM?.dogBreedAt(index: index)?.name ?? ""
+                    let dogSubBreeds = dogBreedsListVM?.dogBreedAt(index: index)?.subBreeds
+                    let urlToGetDogImageURL = "https://dog.ceo/api/breed/\(dogBreedName)/images/random"
+                    let dogImageVM = DogImageVM(urlToGetDogImageURL: urlToGetDogImageURL, networkManager: NetworkManager.shared)
+                    
+                    NavigationLink(destination: DogImageView(dogImageVM: dogImageVM)) {
+                        DogBreedsListCell(dogBreed: dogBreedName)
+                    }
+                    
+                    ForEach(0..<(dogSubBreeds?.count ?? 0), id: \.self) { subIndex in
+                        /// Sub-breeds need their own URL separate from main breed
+                        let dogSubBreedName = dogSubBreeds?[subIndex] ?? ""
+                        let urlToGetDogSubBreedImageURL = "https://dog.ceo/api/breed/\(dogBreedName)/\(dogSubBreedName)/images/random"
+                        let dogSubBreedImageVM = DogImageVM(urlToGetDogImageURL: urlToGetDogSubBreedImageURL, networkManager: NetworkManager.shared)
+                        
+                        NavigationLink(destination: DogImageView(dogImageVM: dogSubBreedImageVM)) {
+                            DogSubBreedsListCell(dogSubBreed: dogSubBreeds?[subIndex] ?? "")
+                        }
+                    }
+                }
+            }
+        }
+        .task {
+            await dogBreedsListVM?.downloadDogBreeds()
+        }
+    }
+}
+
+// MARK: Row that displays Dog Breed Name
+
+struct DogBreedsListCell: View {
+    var dogBreed: String
+    
+    var body: some View {
+        Text(dogBreed)
+    }
+}
+
+// MARK: Row that displays Dog Sub-breed Name
+
+struct DogSubBreedsListCell: View {
+    var dogSubBreed: String
+    
+    var body: some View {
+        Text(dogSubBreed)
+            .padding(.leading, 15)
+    }
+}
