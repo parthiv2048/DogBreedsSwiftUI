@@ -10,6 +10,7 @@ import SwiftUI
 protocol DogImageVMProtocol {
     func downloadDogImageURL() async
     func getDogImageURL() -> String?
+    func getDogName() -> String?
 }
 
 @Observable
@@ -17,10 +18,12 @@ class DogImageVM: DogImageVMProtocol {
     private var networkManager: NetworkManagerProtocol?
     private var urlToGetDogImageURL: String?
     private var dogImageURL: String?
+    private var dogName: String?
     
-    init(urlToGetDogImageURL: String? = nil, networkManager: NetworkManagerProtocol? = nil) {
+    init(urlToGetDogImageURL: String? = nil, networkManager: NetworkManagerProtocol? = nil, dogName: String? = nil) {
         self.urlToGetDogImageURL = urlToGetDogImageURL
         self.networkManager = networkManager
+        self.dogName = dogName
     }
     
     func downloadDogImageURL() async {
@@ -29,5 +32,9 @@ class DogImageVM: DogImageVMProtocol {
     
     func getDogImageURL() -> String? {
         return dogImageURL
+    }
+    
+    func getDogName() -> String? {
+        return dogName
     }
 }

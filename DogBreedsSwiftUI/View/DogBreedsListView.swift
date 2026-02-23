@@ -17,13 +17,23 @@ struct DogBreedsListView: View {
     
     var body: some View {
         NavigationStack {
+            
+            Text("Dog Breeds")
+                .font(.largeTitle)
+                .padding(.top, 20)
+            
             List {
                 ForEach(0..<(dogBreedsListVM?.numberOfDogBreeds() ?? 0), id: \.self) { index in
                     
                     let dogBreedName = dogBreedsListVM?.dogBreedAt(index: index)?.name ?? ""
                     let dogSubBreeds = dogBreedsListVM?.dogBreedAt(index: index)?.subBreeds
                     let urlToGetDogImageURL = "https://dog.ceo/api/breed/\(dogBreedName)/images/random"
-                    let dogImageVM = DogImageVM(urlToGetDogImageURL: urlToGetDogImageURL, networkManager: NetworkManager.shared)
+                    
+                    let dogImageVM = DogImageVM(
+                        urlToGetDogImageURL: urlToGetDogImageURL,
+                        networkManager: NetworkManager.shared,
+                        dogName: dogBreedName
+                    )
                     
                     NavigationLink(destination: DogImageView(dogImageVM: dogImageVM)) {
                         DogBreedsListCell(dogBreed: dogBreedName)
@@ -33,7 +43,12 @@ struct DogBreedsListView: View {
                         /// Sub-breeds need their own URL separate from main breed
                         let dogSubBreedName = dogSubBreeds?[subIndex] ?? ""
                         let urlToGetDogSubBreedImageURL = "https://dog.ceo/api/breed/\(dogBreedName)/\(dogSubBreedName)/images/random"
-                        let dogSubBreedImageVM = DogImageVM(urlToGetDogImageURL: urlToGetDogSubBreedImageURL, networkManager: NetworkManager.shared)
+                        
+                        let dogSubBreedImageVM = DogImageVM(
+                            urlToGetDogImageURL: urlToGetDogSubBreedImageURL,
+                            networkManager: NetworkManager.shared,
+                            dogName: dogBreedName + "/" + dogSubBreedName
+                        )
                         
                         NavigationLink(destination: DogImageView(dogImageVM: dogSubBreedImageVM)) {
                             DogSubBreedsListCell(dogSubBreed: dogSubBreeds?[subIndex] ?? "")
@@ -55,6 +70,7 @@ struct DogBreedsListCell: View {
     
     var body: some View {
         Text(dogBreed)
+            .fontWeight(.semibold)
     }
 }
 
@@ -65,6 +81,7 @@ struct DogSubBreedsListCell: View {
     
     var body: some View {
         Text(dogSubBreed)
+            .font(.body)
             .padding(.leading, 15)
     }
 }

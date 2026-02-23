@@ -16,6 +16,10 @@ struct DogImageView: View {
     }
     
     var body: some View {
+        Text(dogImageVM?.getDogName() ?? "")
+            .font(.largeTitle)
+            .padding()
+        
         AsyncImage(url: URL(string: dogImageVM?.getDogImageURL() ?? "")) { image in
             image
                 .resizable()
