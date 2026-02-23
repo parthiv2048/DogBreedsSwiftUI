@@ -28,7 +28,6 @@ class DogImageVM: DogImageVMProtocol {
     }
     
     func getDogImageURL() -> String? {
-        print(dogImageURL ?? "No image")
         return dogImageURL
     }
 }
