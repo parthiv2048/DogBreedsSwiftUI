@@ -13,23 +13,23 @@ protocol NetworkManagerProtocol {
 }
 
 class NetworkManager: NetworkManagerProtocol {
-    init() {}
-    
     /// Singleton for NetworkManager
     static let shared = NetworkManager()
+    
+    init() {}
     
     // MARK: Fetch List of All Dog Breeds and Sub-breeds from Server
     
     func fetchAllDogBreeds(url: String?) async -> [DogBreed] {
         guard let uwURL = url, let serverURL = URL(string: uwURL) else {
-            print("Log: Invalid URL")
+            print(ErrorMessages.invalidURL.rawValue)
             return []
         }
         
         do {
             let (data, response) = try await URLSession.shared.data(from: serverURL)
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                print("Log: Server returned error")
+                print(ErrorMessages.serverError.rawValue)
                 return []
             }
             let dogBreedsResponse = try? JSONDecoder().decode(DogBreedServerResponse.self, from: data)
@@ -47,7 +47,7 @@ class NetworkManager: NetworkManagerProtocol {
             
             return dogBreedsList
         } catch {
-            print("Log: Error when running network code")
+            print(ErrorMessages.codeError.rawValue)
             return []
         }
     }
@@ -56,21 +56,21 @@ class NetworkManager: NetworkManagerProtocol {
     
     func fetchDogImageURL(urlToGetDogImageURL: String?) async -> String {
         guard let uwURL = urlToGetDogImageURL, let serverURL = URL(string: uwURL) else {
-            print("Log: Invalid URL")
+            print(ErrorMessages.invalidURL.rawValue)
             return ""
         }
         
         do {
             let (data, response) = try await URLSession.shared.data(from: serverURL)
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                print("Log: Server returned error")
+                print(ErrorMessages.serverError.rawValue)
                 return ""
             }
             let dogImageResponse = try? JSONDecoder().decode(DogImageServerResponse.self, from: data)
             
             return dogImageResponse?.message ?? ""
         } catch {
-            print("Log: Error when running network code")
+            print(ErrorMessages.codeError.rawValue)
             return ""
         }
     }

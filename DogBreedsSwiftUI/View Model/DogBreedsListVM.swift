@@ -9,8 +9,7 @@ import Foundation
 
 protocol DogBreedsListVMProtocol {
     func downloadDogBreeds() async
-    func numberOfDogBreeds() -> Int?
-    func dogBreedAt(index: Int) -> DogBreed?
+    func getDogBreedsList() -> [DogBreed]?
 }
 
 @Observable
@@ -27,11 +26,7 @@ class DogBreedsListVM: DogBreedsListVMProtocol {
         dogBreedsList = await self.networkManager?.fetchAllDogBreeds(url: ServerEndpoints.dogBreedsList.rawValue)
     }
     
-    func numberOfDogBreeds() -> Int? {
-        return dogBreedsList?.count
-    }
-    
-    func dogBreedAt(index: Int) -> DogBreed? {
-        return dogBreedsList?[index]
+    func getDogBreedsList() -> [DogBreed]? {
+        return dogBreedsList
     }
 }

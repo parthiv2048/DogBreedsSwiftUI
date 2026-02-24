@@ -24,10 +24,10 @@ struct DogBreedsListView: View {
                 .padding(.top, 20)
             
             List {
-                ForEach(0..<(dogBreedsListVM?.numberOfDogBreeds() ?? 0), id: \.self) { index in
+                ForEach(dogBreedsListVM?.getDogBreedsList() ?? []) { dogBreedInfo in
                     
-                    let dogBreedName = dogBreedsListVM?.dogBreedAt(index: index)?.name ?? ""
-                    let dogSubBreeds = dogBreedsListVM?.dogBreedAt(index: index)?.subBreeds
+                    let dogBreedName = dogBreedInfo.name ?? ""
+                    let dogSubBreeds = dogBreedInfo.subBreeds
                     let urlToGetDogImageURL = "https://dog.ceo/api/breed/\(dogBreedName)/images/random"
                     
                     let dogImageVM = DogImageVM(
