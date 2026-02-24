@@ -20,6 +20,7 @@ struct DogBreedsListView: View {
             
             Text("Dog Breeds")
                 .font(.largeTitle)
+                .bold()
                 .padding(.top, 20)
             
             List {
