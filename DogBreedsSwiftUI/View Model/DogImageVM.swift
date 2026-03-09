@@ -16,9 +16,11 @@ protocol DogImageVMProtocol {
 @Observable
 class DogImageVM: DogImageVMProtocol {
     private var networkManager: NetworkManagerProtocol?
-    private var urlToGetDogImageURL: String?
     private var dogImageURL: String?
     private var dogName: String?
+    
+    @ObservationIgnored
+    private var urlToGetDogImageURL: String?
     
     init(urlToGetDogImageURL: String? = nil, networkManager: NetworkManagerProtocol? = nil, dogName: String? = nil) {
         self.urlToGetDogImageURL = urlToGetDogImageURL
