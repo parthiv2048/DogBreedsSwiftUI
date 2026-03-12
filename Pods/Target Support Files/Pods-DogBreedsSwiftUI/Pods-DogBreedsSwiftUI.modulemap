@@ -1,0 +1,6 @@
+framework module Pods_DogBreedsSwiftUI {
+  umbrella header "Pods-DogBreedsSwiftUI-umbrella.h"
+
+  export *
+  module * { export * }
+}

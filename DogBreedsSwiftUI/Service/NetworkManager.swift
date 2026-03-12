@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Alamofire
 
 protocol NetworkManagerProtocol {
     func fetchAllDogBreeds(url: String?) async -> [DogBreed]
@@ -21,57 +22,42 @@ class NetworkManager: NetworkManagerProtocol {
     // MARK: Fetch List of All Dog Breeds and Sub-breeds from Server
     
     func fetchAllDogBreeds(url: String?) async -> [DogBreed] {
-        guard let uwURL = url, let serverURL = URL(string: uwURL) else {
+        guard let uwURL = url else {
             print(ErrorMessages.invalidURL.rawValue)
             return []
         }
         
-        do {
-            let (data, response) = try await URLSession.shared.data(from: serverURL)
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                print(ErrorMessages.serverError.rawValue)
-                return []
-            }
-            let dogBreedsResponse = try? JSONDecoder().decode(DogBreedServerResponse.self, from: data)
-            var dogBreedsList: [DogBreed] = []
-            
-            guard let uwDogBreedsResponse = dogBreedsResponse, let uwMessage = uwDogBreedsResponse.message else {
-                return []
-            }
-            
-            for (breed, subBreeds) in uwMessage {
-                dogBreedsList.append(
-                    DogBreed(name: breed, subBreeds: subBreeds)
-                )
-            }
-            
-            return dogBreedsList
-        } catch {
-            print(ErrorMessages.codeError.rawValue)
+        let serverResponse = try? await AF.request(uwURL)
+            .validate()
+            .serializingDecodable(DogBreedServerResponse.self)
+            .value
+        
+        guard let uwServerResponse = serverResponse, let uwMessage = uwServerResponse.message else {
+            print(ErrorMessages.codeError)
             return []
         }
+        
+        return uwMessage.map { DogBreed(name: $0.key, subBreeds: $0.value) }
     }
     
     // MARK: Fetch the exact URL for Dog breed's image from Server
     
     func fetchDogImageURL(urlToGetDogImageURL: String?) async -> String {
-        guard let uwURL = urlToGetDogImageURL, let serverURL = URL(string: uwURL) else {
+        guard let uwURL = urlToGetDogImageURL else {
             print(ErrorMessages.invalidURL.rawValue)
             return ""
         }
         
-        do {
-            let (data, response) = try await URLSession.shared.data(from: serverURL)
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                print(ErrorMessages.serverError.rawValue)
-                return ""
-            }
-            let dogImageResponse = try? JSONDecoder().decode(DogImageServerResponse.self, from: data)
-            
-            return dogImageResponse?.message ?? ""
-        } catch {
-            print(ErrorMessages.codeError.rawValue)
+        let serverResponse = try? await AF.request(uwURL)
+            .validate()
+            .serializingDecodable(DogImageServerResponse.self)
+            .value
+        
+        guard let uwServerResponse = serverResponse, let uwMessage = uwServerResponse.message else {
+            print(ErrorMessages.codeError)
             return ""
         }
+        
+        return uwMessage
     }
 }

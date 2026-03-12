@@ -5,15 +5,15 @@
 //  Created by Parthiv Ganguly on 2/23/26.
 //
 
-import SwiftUI
+import Foundation
 
-struct DogBreed: Identifiable {
+nonisolated struct DogBreed: Identifiable, Sendable {
     let id = UUID()
     var name: String?
     var subBreeds: [String]?
 }
 
-struct DogBreedServerResponse: Decodable {
+nonisolated struct DogBreedServerResponse: Decodable, Sendable {
     let message: [String: [String]]?
     let status: String?
     
@@ -23,7 +23,7 @@ struct DogBreedServerResponse: Decodable {
     }
 }
 
-struct DogImageServerResponse: Decodable {
+nonisolated struct DogImageServerResponse: Decodable, Sendable {
     let message: String?
     let status: String?
     

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct DogImageView: View {
     
@@ -20,7 +21,7 @@ struct DogImageView: View {
             .font(.largeTitle)
             .padding()
         
-        AsyncImage(url: URL(string: dogImageVM?.getDogImageURL() ?? "")) { image in
+        WebImage(url: URL(string: dogImageVM?.getDogImageURL() ?? "")) { image in
             image
                 .resizable()
                 .scaledToFit()
