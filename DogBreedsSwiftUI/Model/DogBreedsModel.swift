@@ -7,13 +7,13 @@
 
 import Foundation
 
-nonisolated struct DogBreed: Identifiable, Sendable {
+nonisolated struct DogBreed: Identifiable {
     let id = UUID()
     var name: String?
     var subBreeds: [String]?
 }
 
-nonisolated struct DogBreedServerResponse: Decodable, Sendable {
+nonisolated struct DogBreedServerResponse: Decodable {
     let message: [String: [String]]?
     let status: String?
     
@@ -23,7 +23,7 @@ nonisolated struct DogBreedServerResponse: Decodable, Sendable {
     }
 }
 
-nonisolated struct DogImageServerResponse: Decodable, Sendable {
+nonisolated struct DogImageServerResponse: Decodable {
     let message: String?
     let status: String?
     
