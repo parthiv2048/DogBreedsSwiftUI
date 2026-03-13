@@ -65,15 +65,11 @@
 		};
 		E404FD4B2F4CAA2A00CF8FCA /* DogBreedsSwiftUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = DogBreedsSwiftUITests;
 			sourceTree = "<group>";
 		};
 		E404FD552F4CAA2A00CF8FCA /* DogBreedsSwiftUIUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = DogBreedsSwiftUIUITests;
 			sourceTree = "<group>";
 		};
@@ -321,9 +317,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DogBreedsSwiftUI-DogBreedsSwiftUIUITests/Pods-DogBreedsSwiftUI-DogBreedsSwiftUIUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DogBreedsSwiftUI-DogBreedsSwiftUIUITests/Pods-DogBreedsSwiftUI-DogBreedsSwiftUIUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -360,9 +360,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DogBreedsSwiftUI/Pods-DogBreedsSwiftUI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DogBreedsSwiftUI/Pods-DogBreedsSwiftUI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

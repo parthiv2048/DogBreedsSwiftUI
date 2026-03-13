@@ -8,16 +8,11 @@
 import SwiftUI
 import Alamofire
 
-protocol NetworkManagerProtocol {
-    func fetchAllDogBreeds(url: String?) async -> [DogBreed]
-    func fetchDogImageURL(urlToGetDogImageURL: String?) async -> String
-}
-
 class NetworkManager: NetworkManagerProtocol {
     /// Singleton for NetworkManager
     static let shared = NetworkManager()
     
-    init() {}
+    private init() {}
     
     // MARK: Fetch List of All Dog Breeds and Sub-breeds from Server
     

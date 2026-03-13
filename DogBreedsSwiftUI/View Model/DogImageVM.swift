@@ -15,6 +15,9 @@ protocol DogImageVMProtocol {
 
 @Observable
 class DogImageVM: DogImageVMProtocol {
+    
+    // MARK: - Properties
+    
     private var networkManager: NetworkManagerProtocol?
     private var dogImageURL: String?
     private var dogName: String?
@@ -22,11 +25,15 @@ class DogImageVM: DogImageVMProtocol {
     @ObservationIgnored
     private var urlToGetDogImageURL: String?
     
+    // MARK: - Initializer (Injection)
+    
     init(urlToGetDogImageURL: String? = nil, networkManager: NetworkManagerProtocol? = nil, dogName: String? = nil) {
         self.urlToGetDogImageURL = urlToGetDogImageURL
         self.networkManager = networkManager
         self.dogName = dogName
     }
+    
+    // MARK: - Helper Methods
     
     func downloadDogImageURL() async {
         dogImageURL = await self.networkManager?.fetchDogImageURL(urlToGetDogImageURL: urlToGetDogImageURL)

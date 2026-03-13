@@ -10,11 +10,17 @@ import SDWebImageSwiftUI
 
 struct DogImageView: View {
     
+    // MARK: - Properties
+    
     private var dogImageVM: DogImageVMProtocol?
+    
+    // MARK: - Initializer (Injection)
     
     init(dogImageVM: DogImageVMProtocol? = nil) {
         self.dogImageVM = dogImageVM
     }
+    
+    // MARK: - Body View
     
     var body: some View {
         Text(dogImageVM?.getDogName() ?? "")

@@ -10,24 +10,36 @@ import Lottie
 
 struct DogBreedsListView: View {
     
+    // MARK: - Properties
+    
     private var dogBreedsListVM: DogBreedsListVMProtocol?
+    
+    // MARK: - Initializer (Injection)
     
     init(dogBreedsListVM: DogBreedsListVMProtocol? = nil) {
         self.dogBreedsListVM = dogBreedsListVM
     }
     
+    // MARK: - Dog Breeds Header View
+    
+    var dogBreedsHeader: some View {
+        HStack {
+            Text("Dog Breeds")
+                .font(.largeTitle)
+                .bold()
+            
+            LottieView(animation: .named("CuteDoggie"))
+                .playing(loopMode: .loop)
+                .frame(width: 100, height: 100)
+        }
+    }
+    
+    // MARK: - Body View
+    
     var body: some View {
         NavigationStack {
             
-            HStack {
-                Text("Dog Breeds")
-                    .font(.largeTitle)
-                    .bold()
-                
-                LottieView(animation: .named("CuteDoggie"))
-                    .playing(loopMode: .loop)
-                    .frame(width: 100, height: 100)
-            }
+            dogBreedsHeader
             
             List {
                 ForEach(dogBreedsListVM?.getDogBreedsList() ?? []) { dogBreedInfo in
@@ -70,9 +82,9 @@ struct DogBreedsListView: View {
     }
 }
 
-// MARK: Row that displays Dog Breed Name
+// MARK: Row View that displays Dog Breed Name
 
-struct DogBreedsListCell: View {
+private struct DogBreedsListCell: View {
     var dogBreed: String
     
     var body: some View {
@@ -81,9 +93,9 @@ struct DogBreedsListCell: View {
     }
 }
 
-// MARK: Row that displays Dog Sub-breed Name
+// MARK: Row View that displays Dog Sub-breed Name
 
-struct DogSubBreedsListCell: View {
+private struct DogSubBreedsListCell: View {
     var dogSubBreed: String
     
     var body: some View {
