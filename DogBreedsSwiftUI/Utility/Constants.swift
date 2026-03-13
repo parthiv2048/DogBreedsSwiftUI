@@ -16,5 +16,5 @@ enum ServerEndpoints: String {
 enum ErrorMessages: String {
     case invalidURL = "Log: Invalid URL"
     case serverError = "Log: Server returned error"
-    case codeError = "Log: Error when running network code"
+    case codeError = "Log: Decoding Error"
 }

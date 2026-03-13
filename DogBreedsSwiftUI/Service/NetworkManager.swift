@@ -33,7 +33,7 @@ class NetworkManager: NetworkManagerProtocol {
             .value
         
         guard let uwServerResponse = serverResponse, let uwMessage = uwServerResponse.message else {
-            print(ErrorMessages.codeError)
+            print(ErrorMessages.codeError.rawValue)
             return []
         }
         

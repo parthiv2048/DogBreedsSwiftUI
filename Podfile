@@ -9,6 +9,7 @@ target 'DogBreedsSwiftUI' do
   pod 'SDWebImage'
   pod 'SDWebImageSwiftUI'
   pod 'Alamofire'
+  pod 'lottie-ios'
 
   target 'DogBreedsSwiftUITests' do
     inherit! :search_paths

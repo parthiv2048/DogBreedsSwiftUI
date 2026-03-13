@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Lottie
 
 struct DogBreedsListView: View {
     
@@ -18,10 +19,15 @@ struct DogBreedsListView: View {
     var body: some View {
         NavigationStack {
             
-            Text("Dog Breeds")
-                .font(.largeTitle)
-                .bold()
-                .padding(.top, 20)
+            HStack {
+                Text("Dog Breeds")
+                    .font(.largeTitle)
+                    .bold()
+                
+                LottieView(animation: .named("CuteDoggie"))
+                    .playing(loopMode: .loop)
+                    .frame(width: 100, height: 100)
+            }
             
             List {
                 ForEach(dogBreedsListVM?.getDogBreedsList() ?? []) { dogBreedInfo in
